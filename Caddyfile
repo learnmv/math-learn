@@ -1,0 +1,9 @@
+# Production domain
+yourdomain.com {
+    reverse_proxy app:3000
+}
+
+# Local development
+:2025 {
+    reverse_proxy app:3000
+}
