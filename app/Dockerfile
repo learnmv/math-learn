@@ -1,16 +1,16 @@
-FROM oven/bun:1-alpine AS base
+FROM node:20-alpine AS base
 WORKDIR /app
 
 # Dependencies
 FROM base AS deps
-COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile
+COPY package.json ./
+RUN npm install
 
 # Build
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN bun run build
+RUN npm run build
 
 # Production
 FROM base AS runner
@@ -22,4 +22,4 @@ COPY --from=builder /app/.next/static ./.next/static
 EXPOSE 3000
 ENV PORT=3000
 
-CMD ["bun", "server.js"]
+CMD ["node", "server.js"]
