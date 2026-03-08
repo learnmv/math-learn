@@ -1,5 +1,5 @@
 # Production domain
-yourdomain.com {
+:8080 {
     reverse_proxy app:3000
 }
 
